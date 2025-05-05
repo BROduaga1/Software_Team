@@ -1,0 +1,1064 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Trainees",
+      "description": "Operations related to managing trainees"
+    },
+    {
+      "name": "Trainers",
+      "description": "Operations related to managing trainers"
+    },
+    {
+      "name": "Trainings",
+      "description": "Operations related to managing trainings"
+    },
+    {
+      "name": "Auth",
+      "description": "user authentication operations"
+    }
+  ],
+  "paths": {
+    "/api/trainers": {
+      "put": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Update trainer details",
+        "description": "Updates details of a trainer by username.",
+        "operationId": "updateTrainer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainerUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Create a new trainer",
+        "description": "Creates a new trainer with the provided details.",
+        "operationId": "createTrainer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainerCreateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainees/{username}/trainers": {
+      "get": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Get available trainers",
+        "description": "Retrieves a list of available trainers for a trainee.",
+        "operationId": "getAvailableTrainers",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainerDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Update trainers list",
+        "description": "Updates the list of trainers for a trainee.",
+        "operationId": "updateTrainersList",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainerShortInfoDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainees/": {
+      "put": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Update trainee details",
+        "description": "Updates details of a trainee by username.",
+        "operationId": "updateTrainee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TraineeUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraineeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/change-password": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeLoginDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/trainings": {
+      "post": {
+        "tags": [
+          "Trainings"
+        ],
+        "summary": "Create a new training",
+        "description": "Creates a new training with the provided details.",
+        "operationId": "createTraining",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainingDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainings/search": {
+      "post": {
+        "tags": [
+          "Trainings"
+        ],
+        "summary": "Search trainings",
+        "description": "Searches for trainings based on criteria.",
+        "operationId": "searchTrainings",
+        "parameters": [
+          {
+            "name": "arg0",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainingSearchDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageTrainingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainees": {
+      "post": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Create a new trainee",
+        "description": "Creates a new trainee with the provided details.",
+        "operationId": "createTrainee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TraineeCreateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/trainers/{username}/status": {
+      "patch": {
+        "tags": [
+          "Trainers"
+        ],
+        "operationId": "changeStatus",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/trainees/{username}/status": {
+      "patch": {
+        "tags": [
+          "Trainees"
+        ],
+        "operationId": "changeStatus_1",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/trainings/{id}": {
+      "get": {
+        "tags": [
+          "Trainings"
+        ],
+        "summary": "Get training details",
+        "description": "Retrieves details of a training by ID.",
+        "operationId": "getTrainingById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainings/types": {
+      "get": {
+        "tags": [
+          "Trainings"
+        ],
+        "summary": "Get all training types",
+        "description": "Retrieves a list of all training types.",
+        "operationId": "getAllTrainingTypes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainingType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainers/{username}": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Get trainer details",
+        "description": "Retrieves details of a trainer by username.",
+        "operationId": "selectTrainer",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainers/{username}/unassigned": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "summary": "Get unassigned trainers",
+        "description": "Retrieves a list of unassigned trainers for a trainee.",
+        "operationId": "getUnassignedTrainers",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrainerDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trainees/{username}": {
+      "get": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Get trainee details",
+        "description": "Retrieves details of a trainee by username.",
+        "operationId": "selectTrainee",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraineeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trainees"
+        ],
+        "summary": "Delete trainee",
+        "description": "Deletes a trainee by username.",
+        "operationId": "deleteTrainee",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TrainerUpdateDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserUpdateDto"
+          },
+          "specialization": {
+            "$ref": "#/components/schemas/TrainingType"
+          }
+        },
+        "required": [
+          "specialization",
+          "user"
+        ]
+      },
+      "TrainingType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdateDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of the user",
+            "example": "username"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "example": "john",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "example": "doe",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "The active state of the user",
+            "example": true
+          }
+        },
+        "required": [
+          "firstName",
+          "isActive",
+          "lastName",
+          "username"
+        ]
+      },
+      "TraineeShortInfoDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserShortInfoDto"
+          }
+        }
+      },
+      "TrainerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "specialization": {
+            "$ref": "#/components/schemas/TrainingType"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDto"
+          },
+          "trainees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TraineeShortInfoDto"
+            }
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserShortInfoDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "TrainerShortInfoDto": {
+        "type": "object",
+        "properties": {
+          "specialization": {
+            "$ref": "#/components/schemas/TrainingType"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserShortInfoDto"
+          }
+        }
+      },
+      "TraineeUpdateDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserUpdateDto"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of birth of the trainee",
+            "example": "2000-01-01"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the trainee",
+            "example": "Some address"
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "TraineeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "address": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDto"
+          },
+          "trainers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainerShortInfoDto"
+            }
+          }
+        }
+      },
+      "ChangeLoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of the user",
+            "example": "john.doe"
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "The old password of the user",
+            "example": "password"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The new password of the user",
+            "example": "password2"
+          }
+        },
+        "required": [
+          "newPassword",
+          "oldPassword",
+          "username"
+        ]
+      },
+      "TrainingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trainerUsername": {
+            "type": "string",
+            "description": "The username of the trainer",
+            "example": "john.doe"
+          },
+          "traineeUsername": {
+            "type": "string",
+            "description": "The username of the trainee",
+            "example": "jane_doe"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the training",
+            "example": "Leg day",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/components/schemas/TrainingType",
+            "description": "The type of the training",
+            "example": "{name:YOGA, id:1}"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date of the training",
+            "example": "2021-12-31T23:59:59"
+          },
+          "durationMinutes": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The duration of the training in minutes",
+            "example": 60,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "date",
+          "durationMinutes",
+          "name",
+          "traineeUsername",
+          "trainerUsername",
+          "type"
+        ]
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TrainingSearchDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of the user",
+            "example": "john.doe"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The first name of the user",
+            "example": "john"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The last name of the user",
+            "example": "doe"
+          },
+          "isTrainee": {
+            "type": "boolean",
+            "description": "The active state of the user",
+            "example": true
+          }
+        }
+      },
+      "PageTrainingDto": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainingDto"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sortnull"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/Pageablenull"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Pageablenull": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sortnull"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unpaged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Sortnull": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TrainerCreateDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserCreateDto"
+          },
+          "specialization": {
+            "$ref": "#/components/schemas/TrainingType"
+          }
+        },
+        "required": [
+          "specialization",
+          "user"
+        ]
+      },
+      "UserCreateDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "example": "john",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "example": "doe",
+            "maxLength": 50,
+            "minLength": 1
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName"
+        ]
+      },
+      "UserLoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of the user",
+            "example": "john.doe"
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the user",
+            "example": "password"
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ]
+      },
+      "TraineeCreateDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserCreateDto"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of birth of the trainee",
+            "example": "2000-01-01"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the trainee",
+            "example": "Some address"
+          }
+        },
+        "required": [
+          "user"
+        ]
+      }
+    }
+  }
+}
