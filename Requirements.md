@@ -1,4 +1,4 @@
-GymCRM System
+# GymCRM System
 # Functional Requirements
 
 ## User (Client)
